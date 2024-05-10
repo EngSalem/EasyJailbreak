@@ -1,11 +1,11 @@
 import logging
 import warnings
 from .model_base import BlackBoxModelBase
-from openai import OpenAI
+from openai import OpenAI, AzureOpenAI
 from fastchat.conversation import get_conv_template
 
 class OpenaiModel(BlackBoxModelBase):
-    def __init__(self, model_name: str, api_keys: str, generation_config=None):
+    def __init__(self, model_name: str, api_keys: str, generation_config=None, azure=False, end_point=None, api_version=None):
         """
         Initializes the OpenAI model with necessary parameters.
         :param str model_name: The name of the model to use.
@@ -13,7 +13,14 @@ class OpenaiModel(BlackBoxModelBase):
         :param str template_name: The name of the conversation template, defaults to 'chatgpt'.
         :param dict generation_config: Configuration settings for generation, defaults to an empty dictionary.
         """
-        self.client = OpenAI(api_key=api_keys)
+        if azure:
+           if not (isinstance(end_point) and isinstance(api_version)):
+              raise ValueError('end_point and/or api_version can not be none when setting azure=True') 
+           self.client = AzureOpenAI(azure_endpoint = end_point,
+                                     api_key=api_keys,
+                                     api_version=api_version)
+        else:    
+           self.client = OpenAI(api_key=api_keys)
         self.model_name = model_name
         self.conversation = get_conv_template('chatgpt')
         self.generation_config = generation_config if generation_config is not None else {}
