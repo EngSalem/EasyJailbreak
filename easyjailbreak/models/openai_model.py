@@ -14,7 +14,7 @@ class OpenaiModel(BlackBoxModelBase):
         :param dict generation_config: Configuration settings for generation, defaults to an empty dictionary.
         """
         if azure:
-           if not (isinstance(end_point) and isinstance(api_version)):
+           if not (isinstance(end_point, str) and isinstance(api_version, str)):
               raise ValueError('end_point and/or api_version can not be none when setting azure=True') 
            self.client = AzureOpenAI(azure_endpoint = end_point,
                                      api_key=api_keys,
