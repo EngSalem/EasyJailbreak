@@ -54,7 +54,7 @@ class HuggingfaceModel(WhiteBoxModelBase):
             self.conversation.sep2 = self.conversation.sep2.strip()
 
         if model_name == 'zero_shot':
-            self.conversation.roles = tuple(['### ' + r for r in self.conversation.template.roles])
+            self.conversation.roles = tuple(['### ' + r for r in self.conversation.roles])
             self.conversation.sep = '\n'
 
         self.format_str = self.create_format_str()
