@@ -216,7 +216,7 @@ class TAP(AttackerBase):
                 num_responses = len(new_dataset)
                 self.evaluator(new_dataset)
                 new_dataset = self.selector.select(new_dataset)
-                print(f"""\n\t{'=' * 36}\n\tCount of Calls of Evaluator is: {self.evaluator.eval_model.generate.calls - num_responses}\n{'=' * 36}\n""", flush=True)
+                # print(f"""\n\t{'=' * 36}\n\tCount of Calls of Evaluator is: {self.evaluator.eval_model.generate.calls - num_responses}\n{'=' * 36}\n""", flush=True)
 
                 batch[i] = new_dataset
                 ############# attack successful ################
